@@ -47,6 +47,24 @@
             background: #c71f28;
         }
 
+        /* Container for the answer buttons */
+        .buttons {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Styling for the "no" button */
+        .cta.no {
+            background: #666;
+        }
+
+        .cta.no:hover {
+            background: #444;
+        }
+
         /* Decorative hearts */
         .hearts {
             position: fixed;
@@ -121,18 +139,55 @@
 </head>
 <body>
     <div class="hearts" id="heartsContainer"></div>
-    <h1>Olá, vizinha!</h1>
+    <!-- Mensagem de convite personalizada para Catarina -->
+    <h1>Olá, Catarina!</h1>
     <p>
         Não pude deixar de notar o seu sorriso encantador — ilumina até quem mora três prédios ao lado.<br>
         Sei que deixou para trás a oportunidade de ir para a Suécia, e imagino que tenha sido para viver histórias ainda mais bonitas aqui.
     </p>
     <p>
-        Que tal começarmos uma nova aventura juntos? Eu penso num jantar caseiro, onde possamos cozinhar e brindar como você adora fazer com os amigos,
-        seguido de uma selecção musical com os melhores êxitos dos anos 90 e 2000 para dançarmos como nas suas festas favoritas.
+        De vizinhos de prédio a algo mais... aceita este convite?
     </p>
-    <p>
-        De vizinhos de prédio a companheiros de uma noite memorável... aceita este convite?
-    </p>
-    <a class="cta" href="javascript:void(0)">Sim, quero!</a>
+    <!-- Botões de resposta -->
+    <div class="buttons">
+        <!-- Botão de Aceitar: clique para interagir (envia e-mail automático ou redireciona ao WhatsApp). Substitua o endereço de e‑mail ou número de telefone conforme necessário -->
+        <a id="yesButton" class="cta" href="#">Sim, quero!</a>
+        <button id="noButton" class="cta no" type="button">Não, obrigado</button>
+    </div>
+    <script>
+        // Interação para o botão de rejeição ("Não, obrigado"): o botão foge do cursor e diminui até desaparecer
+        document.addEventListener('DOMContentLoaded', function() {
+            const noBtn = document.getElementById('noButton');
+            const yesBtn = document.getElementById('yesButton');
+            let scale = 1.0;
+            // Quando o cursor se aproxima do botão "Não, obrigado", ele foge e diminui
+            noBtn.addEventListener('mouseover', () => {
+                const x = Math.random() * 80;
+                const y = Math.random() * 80;
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${x}%`;
+                noBtn.style.top = `${y}%`;
+                scale *= 0.8;
+                noBtn.style.transform = `scale(${scale})`;
+                if (scale < 0.3) {
+                    noBtn.style.display = 'none';
+                }
+            });
+
+            // Clique no botão "Sim, quero!": envia um e-mail ou abre uma conversa no WhatsApp
+            yesBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                /*
+                 * Modifique a linha abaixo para o comportamento desejado:
+                 * 1) Para enviar um e‑mail: utilize uma ligação mailto com o seu endereço, assunto e corpo.
+                 *    Exemplo: window.location.href = 'mailto:o.seu.email@example.com?subject=Catarina%20aceitou%20o%20convite&body=Ol%C3%A1,%20aceitei%20o%20convite!';
+                 * 2) Para abrir uma conversa no WhatsApp: utilize a API wa.me com o número (código internacional sem +) e a mensagem.
+                 *    Exemplo: window.location.href = 'https://wa.me/351913580168?text=Ol%C3%A1,%20aceitei%20o%20convite!';
+                 * No exemplo abaixo, por padrão usamos um link para WhatsApp com um número fictício. Substitua pelo seu número real.
+                 */
+                window.location.href = 'https://wa.me/351913580168?text=Ol%C3%A1,%20aceitei%20o%20convite!';
+            });
+        });
+    </script>
 </body>
 </html>
